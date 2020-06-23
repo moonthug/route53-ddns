@@ -1,0 +1,22 @@
+# route53-ddns
+
+
+## Environment Variables
+
+### Required 
+
+```
+ROUTE53_DDNS_DOMAIN_NAME
+ROUTE53_DDNS_RECORD_TYPE
+ROUTE53_DDNS_HOSTED_ZONE_ID
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_REGION
+```
+
+### Optional
+
+```
+ROUTE53_DDNS_UPDATE_INTERVAL = 21600            # 6 Hours
+ROUTE53_DDNS_UPDATE_SNS_TOPIC_ARN = null        # Disabled
+```
