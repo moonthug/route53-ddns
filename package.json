@@ -2,7 +2,17 @@
   "name": "route53-ddns",
   "version": "1.0.1",
   "description": "Update a Route53 DNS record when the public IP changes",
-  "main": "index.js",
+  "author": "polyglot.rodeo alex@polyglot.rodeo",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moonthug/route53-ddns.git"
+  },
+  "bugs": {
+    "url": "https://github.com/moonthug/route53-ddns/issues"
+  },
+  "homepage": "https://github.com/moonthug/route53-ddns#readme",
+  "main": "dist/index.js",
   "bin": "./bin/route53-ddns.js",
   "scripts": {
     "build": "tsc",
@@ -15,8 +25,14 @@
     "postversion": "git push && git push --tags && npm publish",
     "todo": "leasot -x --reporter markdown ./src/**/* ./test/**/* > TODO.md"
   },
-  "author": "polyglot.rodeo alex@polyglot.rodeo",
-  "license": "ISC",
+  "directories": {
+    "dist": "dist",
+    "bin": "bin"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
   "dependencies": {
     "@types/string-template": "^1.0.2",
     "aws-sdk": "^2.702.0",
@@ -37,16 +53,5 @@
   "optionalDependencies": {
     "leasot": "*",
     "nodemon": "^1.18.3"
-  },
-  "directories": {
-    "example": "example"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/moonthug/route53-ddns.git"
-  },
-  "bugs": {
-    "url": "https://github.com/moonthug/route53-ddns/issues"
-  },
-  "homepage": "https://github.com/moonthug/route53-ddns#readme"
+  }
 }
