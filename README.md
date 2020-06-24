@@ -86,3 +86,25 @@ ROUTE53_DDNS_LOG_LEVEL = 'info'
 ROUTE53_DDNS_UPDATE_SNS_SUBJECT = '[{domainName}] Public IP Updated'
 ROUTE53_DDNS_UPDATE_SNS_BODY = 'domainName: {domainName}\ncurrentPublicIP: {currentPublicIP}\nhostedZoneID: {hostedZoneID}'
 ```
+
+## AWS
+
+Example IAM for updating records and sending SNS notifications.
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "route53:ChangeResourceRecordSets",
+            "Resource": "arn:aws:route53:eu-west-2:111111111111:hostedzone/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "sns:Publish",
+            "Resource": "arn:aws:sns:eu-west-2:111111111111:ip_update"
+        }
+    ]
+}
+```
