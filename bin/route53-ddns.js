@@ -16,8 +16,8 @@ assert(process.env.ROUTE53_DDNS_RECORD_TYPE, 'ROUTE53_DDNS_RECORD_TYPE not set i
 assert(process.env.ROUTE53_DDNS_HOSTED_ZONE_ID, 'ROUTE53_DDNS_HOSTED_ZONE_ID not set in environment');
 
 const interval = process.env.ROUTE53_DDNS_UPDATE_INTERVAL
-  ? parseInt(process.env.ROUTE53_DDNS_UPDATE_INTERVAL) / 1000
-  : 1000 * 60 * 60 * 6;
+  ? parseInt(process.env.ROUTE53_DDNS_UPDATE_INTERVAL)
+  : 60 * 60 * 6;
 
 //
 // Logger

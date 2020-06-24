@@ -60,8 +60,8 @@ export const runRoute53Updater = async (options: IRunRoute53UpdaterOptions) => {
   const logger = localOptions.logger || pino({ level: 'info' });
   let currentPublicIP = '';
 
-  logger.info(`starting`);
-  logger.debug(`%O`, localOptions);
+  logger.info('starting');
+  logger.debug('%O', localOptions);
 
   const tick = async () => {
     try {
@@ -100,5 +100,5 @@ export const runRoute53Updater = async (options: IRunRoute53UpdaterOptions) => {
   await tick();
 
   // Loop
-  setAsyncInterval(tick, localOptions.interval);
+  setAsyncInterval(tick, localOptions.interval * 1000);
 };
