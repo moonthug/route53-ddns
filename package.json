@@ -1,6 +1,6 @@
 {
   "name": "route53-ddns",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Update a Route53 DNS record when the public IP changes",
   "main": "index.js",
   "bin": "./bin/route53-ddns.js",
