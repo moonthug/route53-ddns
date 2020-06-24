@@ -1,6 +1,6 @@
 {
   "name": "route53-ddns",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Update a Route53 DNS record when the public IP changes",
   "author": "polyglot.rodeo alex@polyglot.rodeo",
   "license": "ISC",
