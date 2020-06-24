@@ -1,12 +1,30 @@
+import pino from 'pino';
+
 import { setAsyncInterval } from './setAsyncInterval';
 import { getCurrentPublicIP } from './getCurrentPublicIP';
 import { updateRoute53DNSRecord } from './updateRoute53DNSRecord';
+import { applyStringTemplate } from './applyStringTemplate';
 import { sendSNS } from './sendSNS';
 
 /**
  *
  */
 type RecordType = 'A';
+
+/**
+ *
+ */
+type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+
+/**
+ *
+ */
+interface ILogger {
+  debug: (args: any) => any;
+  info: (args: any) => any;
+  warn: (args: any) => any;
+  error: (args: any) => any;
+}
 
 /**
  *
@@ -18,6 +36,10 @@ interface IRunRoute53UpdaterOptions {
   hostedZoneID: string;
   ttl?: number;
   updateSNSTopicARN?: string;
+  updateSNSSubjectTemplate?: string;
+  updateSNSBodyTemplate?: string;
+  logger?: ILogger;
+  logLevel?: LogLevel;
 }
 
 /**
@@ -25,38 +47,60 @@ interface IRunRoute53UpdaterOptions {
  * @param options
  */
 export const runRoute53Updater = async (options: IRunRoute53UpdaterOptions) => {
+  const defaults = {
+    ttl: 60,
+    updateSNSSubjectTemplate: '[{domainName}] Public IP Updated',
+    updateSNSBodyTemplate: 'domainName: {domainName}\ncurrentPublicIP: {currentPublicIP}\nhostedZoneID: {hostedZoneID}',
+    logLevel: 'info'
+  };
+
+  const localOptions = {
+    ...defaults,
+    ...options
+  };
+
+  const logger = localOptions.logger || pino({ level: 'info' });
   let currentPublicIP = '';
 
-  setAsyncInterval(async () => {
+  logger.info(`starting`);
+  logger.debug(`%O`, localOptions);
+
+  const tick = async () => {
     try {
       const updatedPublicIP = await getCurrentPublicIP();
 
       if (updatedPublicIP !== currentPublicIP) {
         currentPublicIP = updatedPublicIP;
-        console.log(`new ip: ${currentPublicIP}`);
+        logger.info(`new ip: ${currentPublicIP}`);
 
         await updateRoute53DNSRecord({
           ip: currentPublicIP,
-          domainName: options.domainName,
-          recordType: options.recordType,
-          hostedZoneID: options.hostedZoneID,
-          ttl: options.ttl || 60
+          domainName: localOptions.domainName,
+          recordType: localOptions.recordType,
+          hostedZoneID: localOptions.hostedZoneID,
+          ttl: localOptions.ttl || 60
         });
-        console.log(`domain updated: ${options.domainName}`);
+        logger.info(`domain updated: ${localOptions.domainName}`);
 
-        if (options.updateSNSTopicARN) {
+        if (localOptions.updateSNSTopicARN) {
           await sendSNS({
-            subject: 'Public IP Updated',
-            message: `New IP: ${currentPublicIP}`,
-            topicARN: options.updateSNSTopicARN
+            subject: applyStringTemplate(localOptions.updateSNSSubjectTemplate, { currentPublicIP, ...localOptions }),
+            message: applyStringTemplate(localOptions.updateSNSBodyTemplate, { currentPublicIP, ...localOptions }),
+            topicARN: localOptions.updateSNSTopicARN
           });
-          console.log(`update notification sent: ${options.updateSNSTopicARN}`);
+          logger.info(`update notification sent: ${localOptions.updateSNSTopicARN}`);
         }
       } else {
-        console.log(`current ip: ${currentPublicIP}`);
+        logger.info(`current ip: ${currentPublicIP}`);
       }
     } catch (e) {
-      console.error(e);
+      logger.error(e);
     }
-  }, options.interval);
+  };
+
+  // Initial call
+  await tick();
+
+  // Loop
+  setAsyncInterval(tick, localOptions.interval);
 };

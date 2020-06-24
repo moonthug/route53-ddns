@@ -85,3 +85,5 @@ dist/
 lcov.info
 lcov-report
 xunit.xml
+
+.npmrc

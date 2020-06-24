@@ -19,4 +19,7 @@ AWS_REGION
 ```
 ROUTE53_DDNS_UPDATE_INTERVAL = 21600            # 6 Hours
 ROUTE53_DDNS_UPDATE_SNS_TOPIC_ARN = null        # Disabled
+ROUTE53_DDNS_LOG_LEVEL = 'info'
+ROUTE53_DDNS_UPDATE_SNS_SUBJECT = '[{domainName}] Public IP Updated'
+ROUTE53_DDNS_UPDATE_SNS_BODY = 'domainName: {domainName}\ncurrentPublicIP: {currentPublicIP}\nhostedZoneID: {hostedZoneID}'
 ```

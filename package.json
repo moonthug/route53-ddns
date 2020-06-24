@@ -3,25 +3,30 @@
   "version": "1.0.0",
   "description": "Update a Route53 DNS record when the public IP changes",
   "main": "index.js",
-  "bin" : "./bin/route53-ddns.js",
+  "bin": "./bin/route53-ddns.js",
   "scripts": {
     "build": "tsc",
     "prebuild": "rm -rf ./dist",
     "lint": "tslint -p tsconfig.json",
     "lint:fix": "tslint --fix -p tsconfig.json",
     "start": "node ./bin/route53-ddns.js",
+    "start:pretty": "node ./bin/route53-ddns.js | pino-pretty",
     "todo": "leasot -x --reporter markdown ./src/**/* ./test/**/* > TODO.md"
   },
   "author": "polyglot.rodeo alex@polyglot.rodeo",
   "license": "ISC",
   "dependencies": {
+    "@types/string-template": "^1.0.2",
     "aws-sdk": "^2.702.0",
-    "public-ip": "^4.0.1",
     "leasot": "*",
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.3",
+    "pino": "^6.3.2",
+    "public-ip": "^4.0.1",
+    "string-template": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^12.11.2",
+    "@types/pino": "^6.3.0",
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
     "tslint-config-semistandard": "^8.0.1",
