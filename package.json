@@ -11,6 +11,8 @@
     "lint:fix": "tslint --fix -p tsconfig.json",
     "start": "node ./bin/route53-ddns.js",
     "start:pretty": "node ./bin/route53-ddns.js | pino-pretty",
+    "prepare": "npm run build",
+    "postversion": "git push && git push --tags && npm publish",
     "todo": "leasot -x --reporter markdown ./src/**/* ./test/**/* > TODO.md"
   },
   "author": "polyglot.rodeo alex@polyglot.rodeo",
