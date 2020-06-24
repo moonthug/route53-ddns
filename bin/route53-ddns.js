@@ -33,6 +33,7 @@ runRoute53Updater({
   logger,
   domainName: process.env.ROUTE53_DDNS_DOMAIN_NAME,
   recordType: process.env.ROUTE53_DDNS_RECORD_TYPE,
+  ttl: process.env.ROUTE53_DDNS_RECORD_TTL,
   hostedZoneID: process.env.ROUTE53_DDNS_HOSTED_ZONE_ID,
   updateSNSTopicARN: process.env.ROUTE53_DDNS_UPDATE_SNS_TOPIC_ARN,
   updateSNSSubjectTemplate: process.env.ROUTE53_DDNS_UPDATE_SNS_SUBJECT,

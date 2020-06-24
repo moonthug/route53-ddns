@@ -37,12 +37,14 @@
     "@types/string-template": "^1.0.2",
     "aws-sdk": "^2.702.0",
     "leasot": "*",
+    "lodash.merge": "^4.6.2",
     "nodemon": "^1.18.3",
     "pino": "^6.3.2",
     "public-ip": "^4.0.1",
     "string-template": "^1.0.0"
   },
   "devDependencies": {
+    "@types/lodash.merge": "^4.6.6",
     "@types/node": "^12.11.2",
     "@types/pino": "^6.3.0",
     "ts-node": "^8.4.1",

@@ -1,4 +1,5 @@
 import pino from 'pino';
+import merge from 'lodash.merge';
 
 import { setAsyncInterval } from './setAsyncInterval';
 import { getCurrentPublicIP } from './getCurrentPublicIP';
@@ -54,10 +55,7 @@ export const runRoute53Updater = async (options: IRunRoute53UpdaterOptions) => {
     logLevel: 'info'
   };
 
-  const localOptions = {
-    ...defaults,
-    ...options
-  };
+  const localOptions = merge({}, defaults, options);
 
   const logger = localOptions.logger || pino({ level: 'info' });
   let currentPublicIP = '';
