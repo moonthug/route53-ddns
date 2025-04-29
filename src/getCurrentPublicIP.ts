@@ -1,8 +1,8 @@
-import publicIp from 'public-ip';
+import { publicIpv4 } from 'public-ip';
 
 /**
  *
  */
 export const getCurrentPublicIP = async (): Promise<string> => {
-  return publicIp.v4();
+  return publicIpv4();
 };

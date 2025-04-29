@@ -1,4 +1,4 @@
-import { Route53 } from 'aws-sdk';
+import { Route53Client, ChangeResourceRecordSetsCommand, RRType } from '@aws-sdk/client-route-53';
 
 /**
  *
@@ -6,7 +6,7 @@ import { Route53 } from 'aws-sdk';
 interface IUpdateRoute53DNSRecordOptions {
   ip: string;
   domainName: string;
-  recordType: string;
+  recordType: RRType;
   hostedZoneID: string;
   ttl?: number;
 }
@@ -16,9 +16,9 @@ interface IUpdateRoute53DNSRecordOptions {
  * @param options
  */
 export const updateRoute53DNSRecord = async (options: IUpdateRoute53DNSRecordOptions) => {
-  const route53 = new Route53({ apiVersion: '2013-04-01' });
+  const client = new Route53Client({ apiVersion: '2013-04-01' });
 
-  const params = {
+  const command = new ChangeResourceRecordSetsCommand({
     ChangeBatch: {
       Changes: [
         {
@@ -37,10 +37,10 @@ export const updateRoute53DNSRecord = async (options: IUpdateRoute53DNSRecordOpt
       ]
     },
     HostedZoneId: options.hostedZoneID
-  };
+  });
 
   try {
-    return await route53.changeResourceRecordSets(params).promise();
+    return await client.send(command);
   } catch (e) {
     console.error(e);
     throw e;

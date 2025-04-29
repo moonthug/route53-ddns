@@ -1,4 +1,4 @@
-import { SNS } from 'aws-sdk';
+import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
 
 /**
  *
@@ -14,16 +14,16 @@ interface ISendSNSOptions {
  * @param options
  */
 export const sendSNS = async (options: ISendSNSOptions) => {
-  const sns = new SNS({ apiVersion: '2010-03-31' });
+  const client = new SNSClient({ apiVersion: '2010-03-31' });
 
-  const params = {
+  const command = new PublishCommand({
     Message: options.message,
     Subject: options.subject,
     TopicArn: options.topicARN
-  };
+  });
 
   try {
-    return await sns.publish(params).promise();
+    return await client.send(command);
   } catch (e) {
     console.error(e);
     throw e;

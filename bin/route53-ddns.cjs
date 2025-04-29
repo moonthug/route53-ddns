@@ -39,8 +39,8 @@ runRoute53Updater({
   updateSNSSubjectTemplate: process.env.ROUTE53_DDNS_UPDATE_SNS_SUBJECT,
   updateSNSBodyTemplate: process.env.ROUTE53_DDNS_UPDATE_SNS_BODY
 })
-.catch(pino.final(logger, (err, finalLogger) => {
-  finalLogger.error(err, 'uncaughtException');
+.catch(err => {
+  logger.fatal(err, 'uncaught exception detected');
   process.exit(1)
-}));
+});
 

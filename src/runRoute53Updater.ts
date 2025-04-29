@@ -1,11 +1,10 @@
-import pino from 'pino';
-import merge from 'lodash.merge';
+import { pino } from 'pino';
 
-import { setAsyncInterval } from './setAsyncInterval';
-import { getCurrentPublicIP } from './getCurrentPublicIP';
-import { updateRoute53DNSRecord } from './updateRoute53DNSRecord';
-import { applyStringTemplate } from './applyStringTemplate';
-import { sendSNS } from './sendSNS';
+import { setAsyncInterval } from './setAsyncInterval.js';
+import { getCurrentPublicIP } from './getCurrentPublicIP.js';
+import { updateRoute53DNSRecord } from './updateRoute53DNSRecord.js';
+import { applyStringTemplate } from './applyStringTemplate.js';
+import { sendSNS } from './sendSNS.js';
 
 /**
  *
@@ -55,7 +54,7 @@ export const runRoute53Updater = async (options: IRunRoute53UpdaterOptions) => {
     logLevel: 'info'
   };
 
-  const localOptions = merge({}, defaults, options);
+  const localOptions = { ...defaults, ...options };
 
   const logger = localOptions.logger || pino({ level: 'info' });
   let currentPublicIP = '';

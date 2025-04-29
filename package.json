@@ -14,13 +14,14 @@
   "homepage": "https://github.com/moonthug/route53-ddns#readme",
   "main": "dist/index.js",
   "bin": "./bin/route53-ddns.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "prebuild": "rm -rf ./dist",
     "lint": "tslint -p tsconfig.json",
     "lint:fix": "tslint --fix -p tsconfig.json",
-    "start": "node ./bin/route53-ddns.js",
-    "start:pretty": "node ./bin/route53-ddns.js | pino-pretty",
+    "start": "node bin/route53-ddns.cjs",
+    "start:pretty": "node bin/route53-ddns.cjs | pino-pretty",
     "prepare": "npm run build",
     "postversion": "git push && git push --tags && npm publish",
     "todo": "leasot -x --reporter markdown ./src/**/* ./test/**/* > TODO.md"
@@ -34,26 +35,21 @@
     "bin"
   ],
   "dependencies": {
-    "@types/string-template": "^1.0.2",
-    "aws-sdk": "^2.702.0",
-    "leasot": "*",
-    "lodash.merge": "^4.6.2",
-    "nodemon": "^1.18.3",
-    "pino": "^6.3.2",
-    "public-ip": "^4.0.1",
+    "@aws-sdk/client-route-53": "^3.798.0",
+    "@aws-sdk/client-sns": "^3.798.0",
+    "pino": "^9.6.0",
+    "public-ip": "^7.0.1",
     "string-template": "^1.0.0"
   },
   "devDependencies": {
-    "@types/lodash.merge": "^4.6.6",
-    "@types/node": "^12.11.2",
-    "@types/pino": "^6.3.0",
-    "ts-node": "^8.4.1",
-    "tslint": "^5.20.0",
+    "@types/node": "^20.17.31",
+    "@types/string-template": "^1.0.6",
+    "ts-node": "^10.9.2",
+    "tslint": "^6.1.3",
     "tslint-config-semistandard": "^8.0.1",
-    "typescript": "^3.7.5"
+    "typescript": "^5.8.3"
   },
   "optionalDependencies": {
-    "leasot": "*",
-    "nodemon": "^1.18.3"
+    "leasot": "*"
   }
 }

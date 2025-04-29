@@ -1,1 +1,1 @@
-export { runRoute53Updater } from './runRoute53Updater';
+export { runRoute53Updater } from './runRoute53Updater.js';
