@@ -1,7 +1,7 @@
-FROM mhart/alpine-node:12
+FROM node:20-alpine
 
 ARG ENVIRONMENT=ci
-ENV NODE_ENV ${ENVIRONMENT}
+ENV NODE_ENV=${ENVIRONMENT}
 
 WORKDIR /opt/app
 
@@ -9,6 +9,6 @@ COPY . .
 
 RUN npm set progress=false
 RUN npm install
-RUN npm build
+RUN npm run build
 
 CMD ["npm", "start"]
