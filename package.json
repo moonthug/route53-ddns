@@ -17,11 +17,12 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
+    "dev": "ts-node --esm src/index.ts",
     "prebuild": "rm -rf ./dist",
     "lint": "tslint -p tsconfig.json",
     "lint:fix": "tslint --fix -p tsconfig.json",
-    "start": "node bin/route53-ddns.cjs",
-    "start:pretty": "node bin/route53-ddns.cjs | pino-pretty",
+    "start": "node bin/route53-ddns.mjs",
+    "start:pretty": "node bin/route53-ddns.mjs | pino-pretty",
     "prepare": "npm run build",
     "postversion": "git push && git push --tags && npm publish",
     "todo": "leasot -x --reporter markdown ./src/**/* ./test/**/* > TODO.md"
@@ -38,7 +39,7 @@
     "@aws-sdk/client-route-53": "^3.798.0",
     "@aws-sdk/client-sns": "^3.798.0",
     "pino": "^9.6.0",
-    "public-ip": "^7.0.1",
+    "public-ip": "^8.0.0",
     "string-template": "^1.0.0"
   },
   "devDependencies": {

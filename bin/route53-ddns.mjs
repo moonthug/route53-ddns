@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-const assert = require('assert');
+import assert from 'node:assert';
+import pino from 'pino';
 
-const pino = require('pino');
-
-const { runRoute53Updater } = require('../dist');
+import { runRoute53Updater } from '../dist/index.js'
 
 // AWS
 assert(process.env.AWS_ACCESS_KEY_ID, 'AWS_ACCESS_KEY_ID not set in environment');
